@@ -1,0 +1,30 @@
+
+Server API Key: 
+AIzaSyDuY7yVM2QJEHYDvi2p6Qm_5vKYeP37Yq8
+
+Registration token: (Device token)
+eNZIICkcjDM:APA91bHTS3LuYAw_lJpklmcKzdG9ReJZQ8n5X9llSudcdbMm6BHaX3zcEPa3HjanJGtMqU_np8olLqIH9qQe0ZpVTFxQUYJ5pXrsHtNSVwiXFRJKWF46VQugUbpSe8N5ZxfOaU608U4t
+
+
+-- Send to a specific ID:
+
+curl \
+-H "Content-Type:application/json" \
+-H "Authorization:key=AIzaSyDuY7yVM2QJEHYDvi2p6Qm_5vKYeP37Yq8" \
+--data '{ "to": "eNZIICkcjDM:APA91bHTS3LuYAw_lJpklmcKzdG9ReJZQ8n5X9llSudcdbMm6BHaX3zcEPa3HjanJGtMqU_np8olLqIH9qQe0ZpVTFxQUYJ5pXrsHtNSVwiXFRJKWF46VQugUbpSe8N5ZxfOaU608U4t", "data": {"message": "Message from GCM server"} }' \
+https://gcm-http.googleapis.com/gcm/send
+
+
+-- Send to a topic:
+
+curl \
+-H "Content-Type:application/json" \
+-H "Authorization:key=AIzaSyDuY7yVM2QJEHYDvi2p6Qm_5vKYeP37Yq8" \
+--data '{ "to": "/topics/topic1", "data": {"message": "Topic1 Message from GCM server"} }' \
+https://gcm-http.googleapis.com/gcm/send
+
+curl \
+-H "Content-Type:application/json" \
+-H "Authorization:key=AIzaSyDuY7yVM2QJEHYDvi2p6Qm_5vKYeP37Yq8" \
+--data '{ "to": "/topics/topic2", "data": {"message": "Topic2 Message from GCM server"} }' \
+https://gcm-http.googleapis.com/gcm/send

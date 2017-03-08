@@ -2,6 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="edu.utdallas.emse.sparknav">
 
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <permission android:name="edu.utdallas.emse.sparknav.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="edu.utdallas.emse.sparknav.permission.C2D_MESSAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -19,6 +27,39 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- this class receives messages from GCM. -->
+        <receiver android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="edu.utdallas.emse.sparknav" />
+            </intent-filter>
+        </receiver>
+
+        <!-- the GcmListenerService enables various messaging features and provides
+        the place where your code overrides the onMessageReceived method -->
+        <service android:name="edu.utdallas.emse.sparknav.SparkNavGcmListenerService"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </service>
+
+        <!-- in some cases, registration tokens need to be refreshed - usually for security
+            reasons or if the device information is no longer valid -->
+        <service android:name="edu.utdallas.emse.sparknav.InstanceIDRefreshService"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.google.android.gms.iid.InstanceID" />
+            </intent-filter>
+        </service>
+
+        <!-- this service is used to kick off the token retrieval off the main UI thread -->
+        <service android:name=".GcmRegisterService"
+            android:exported="false" >
+        </service>
     </application>
 
 </manifest>

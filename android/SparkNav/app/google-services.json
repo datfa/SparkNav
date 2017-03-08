@@ -1,0 +1,35 @@
+{
+  "project_info": {
+    "project_number": "119354400569",
+    "project_id": "firebase-sparknav"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:119354400569:android:7022df715375d05e",
+        "android_client_info": {
+          "package_name": "edu.utdallas.emse.sparknav"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsIXQjuATImPf7AT3jcUBncU6602LXkF0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
