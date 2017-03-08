@@ -3,4 +3,6 @@
     <string name="action_settings">Settings</string>
     <string name="reg_success">GCM Successfully registered. You may now start sending messages from GCM.</string>
     <string name="reg_error">There seems to have been an error registering with GCM. :-(</string>
+    <string name="LongMsg">This is a notification style that can contain a large amount of text. It works really well when you have a large amount of information
+    to display in the notification area and want the user to be able to expand the message to see all of the content.</string>
 </resources>
