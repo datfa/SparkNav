@@ -43,9 +43,11 @@ public class SparkNavGcmListenerService extends GcmListenerService {
 
         // Create the intent that will start the ResultActivity when the user
         // taps the notification or chooses an action button
+        //Intent intent = new Intent(getApplicationContext(), NotificationResultActivity.class);
         Intent intent = new Intent(this, NotificationResultActivity.class);
         // Store the notification ID so we can cancel it later in the ResultActivity
         intent.putExtra("notifyID", NOTIFY_ID);
+        //PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), NOTIFY_ID, intent, PendingIntent.FLAG_CANCEL_CURRENT);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, NOTIFY_ID, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
         // Set the three required items all notifications must have
@@ -86,6 +88,6 @@ public class SparkNavGcmListenerService extends GcmListenerService {
         NotificationManager mgr = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
         mgr.notify(NOTIFY_ID, notification);
 
-        Log.d(TAG, "NOTIFICATION CREATED!!");
+        Log.d(TAG, "====> NOTIFICATION CREATED!!");
     }
 }
