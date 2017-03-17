@@ -6,6 +6,18 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
+    <!-- Bluetooth permissions and features -->
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+
+    <uses-feature
+        android:name="android.hardware.bluetooth_le"
+        android:required="true"/>
+
+    <!-- Permissions to fetch user data over network, contact the proximity beacon service,
+       and access location -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
     <permission
         android:name="edu.utdallas.emse.sparknav.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
@@ -19,16 +31,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+       <!-- <meta-data
+            android:name="com.google.android.nearby.messages.API_KEY"
+            android:value="AIzaSyBitU-Q-hE6X4ewLsGQiTwz5bPAXJu5hxs" />-->
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
 
         <!-- this class receives messages from GCM. -->
         <receiver

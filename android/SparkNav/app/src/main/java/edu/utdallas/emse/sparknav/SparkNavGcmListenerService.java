@@ -5,6 +5,8 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -83,8 +85,21 @@ public class SparkNavGcmListenerService extends GcmListenerService {
         // Set the lock screen visibility of the notification
         builder.setVisibility(Notification.VISIBILITY_PUBLIC);
 
+        //Define sound URI
+        //Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+        builder.setSound(soundUri); //This sets the sound to play
+
         // Build the finished notification and then display it to the user
         Notification notification = builder.build();
+
+        //next line for default notification sound
+        //notification.defaults = Notification.DEFAULT_SOUND;
+
+        // use following way for custom sound
+        //final String packageName = context.getPackageName();
+        //notification.sound = Uri.parse("android.resource://" + packageName + "/" + soundResId);
+
         NotificationManager mgr = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
         mgr.notify(NOTIFY_ID, notification);
 

@@ -1,35 +1,30 @@
 package edu.utdallas.emse.sparknav;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
+
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.ResultReceiver;
+import android.os.ResultReceiver;;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final String TAG = "GCM_EXERCISE_MAIN";
+    private final String TAG = "MAIN_ACTIVITY";
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
     private boolean mRegistered;
     protected RegistrationReceiver mRegReceiver;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +53,16 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
     }
 
     @Override
@@ -122,6 +127,5 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
 
 }
