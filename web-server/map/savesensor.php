@@ -18,7 +18,7 @@ require_once 'connection.php';
 // 	// echo $value->y;
 // 	// echo "\n";
 
-$sql = "UPDATE path SET name='" . $obj->id . "' WHERE start_x=" . $obj->x . " AND start_y=" . $obj->y;
+$sql = "UPDATE path SET sensor_id='" . $obj->id . "' WHERE start_x=" . $obj->x . " AND start_y=" . $obj->y;
 // 	"end_x=" . $value->x . ", end_y=" . $value->y;
 
 // 	$last_x = $value->x;

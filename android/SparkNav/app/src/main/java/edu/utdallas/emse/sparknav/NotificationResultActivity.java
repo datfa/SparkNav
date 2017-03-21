@@ -178,7 +178,7 @@ public class NotificationResultActivity extends AppCompatActivity {
         myWebView.loadUrl("http://192.168.1.161/map/viewmap.php");
         //myWebView.loadUrl("http://192.168.43.131/map/viewmap.php");
         //myWebView.loadUrl("http://192.168.1.9/map/viewmap.php");
-
+        //myWebView.loadUrl("http://ec2-35-166-130-129.us-west-2.compute.amazonaws.com/map/viewmap.php");
 /*
         loadMapButton = (Button)findViewById(R.id.loadMapButton);
         loadMapButton.setOnClickListener(new View.OnClickListener() {

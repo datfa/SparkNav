@@ -7,8 +7,8 @@
 	<style type="text/css">
 
 	.map-container {
-		width:800px;
-		height: 1300px;
+		width:900px;
+		height: 1350px;
 		position: relative;
 		margin: 25px auto;
 		border: 1px solid #EEE2E2;
@@ -43,7 +43,7 @@
 </head>
 <body>
 	<div id="map-container" class="map-container">
-		<img class="map-image" src="img/map.png" alt="" height=1300 width=800 />
+		<img class="map-image" src="img/map.png" alt="" height=1350 width=900 />
 	</div>
 	<div class="control">
 		<button type="button" id="newpath">New Path</button>
@@ -91,6 +91,11 @@
 				$(".console").append( "Path " + pathnumber + "<br/>" );
 				$(".console").append( JSON.stringify( map[i] ) + "<br/>" );
 			}
+		}
+
+		function drawEmergency (x,y) {
+			console.log("Draw a fire circle");
+ 			paper.image("img/fire.png", x, y, 50, 50);
 		}
 
 		function playMap() {
@@ -158,7 +163,7 @@
 				var l = 0;
 				var len = p.length;
 				action = function() {
-					if (l < len) {
+					if (l <= len) {
 						var obj = p[l];
 						//console.log(obj.x, obj.y);
 						if( obj.x == 0 && obj.y == 0 ) {
@@ -404,7 +409,7 @@
 				loadMap();
 			});
 
-			paper=Raphael(document.getElementById('map-container'), 800, 1300);
+			paper=Raphael(document.getElementById('map-container'), 900, 1350);
 			paper.canvas.className.baseVal="mapersvg";
 
 			$("#map-container").on("mousedown",function(e) {

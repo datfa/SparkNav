@@ -61,6 +61,7 @@ public class SparkNavGcmListenerService extends GcmListenerService {
         builder.setAutoCancel(true);
 
         // Set the large icon to be our app's launcher icon
+        //builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
         builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
 
         // Set the small subtext message

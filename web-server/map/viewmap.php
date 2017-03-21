@@ -7,10 +7,10 @@
 	<style type="text/css">
 
 	.map-container {
-		width:800px;
-		height: 1300px;
+		width:900px;
+		height: 1350px;
 		position: relative;
-		margin: 25px auto;
+		margin: 20px auto;
 		border: 1px solid #EEE2E2;
 		z-index: 5px;
 	}
@@ -29,7 +29,7 @@
 </head>
 <body>
 	<div id="map-container" class="map-container">
-		<img class="map-image" src="img/map.png" alt="" height=1300 width=800 />
+		<img class="map-image" src="img/map.png" alt="" height=1350 width=900 />
 	</div>
 
 	<script type="text/javascript">
@@ -72,8 +72,12 @@
 
 				reset();
 
+				drawEmergency(330, 1030);
+
 				var l = 0;
 				var len = p.length;
+				var tx = 0;
+				var ty = 0;
 				action = function() {
 					if (l < len) {
 						var obj = p[l];
@@ -85,13 +89,18 @@
 							//console.log(pathStr);
 
 							draw_path(obj.x, obj.y, obj.name);
+							tx = obj.x;
+							ty = obj.y;
 						}
 						l++;
 						setTimeout(action, 100);
+					} else {
+						drawExit(tx, ty);
 					}
 				};
 				setTimeout(action, 100);
 			});
+
 		}
 
 		function makeCircle (x,y) {
@@ -100,6 +109,22 @@
 			newCircle.customAttr = { r:10, fill:lineColor };
 			newCircle.attr("fill", "#f00");
 			newCircle.attr("stroke", "#000");
+		}
+
+		function drawEmergency (x,y) {
+			console.log("Draw a fire circle");
+ 			paper.image("img/fire.png", x, y, 90, 130);
+		}
+
+		function drawExit(x,y) {
+			console.log("Draw a exit circle");
+
+ 			ec = paper.ellipse(x, y, 45, 30);
+ 			ec.attr("stroke", "#000");
+ 			ec.attr("fill", "#fF0");
+			pt = paper.text(x, y, "EXIT");
+			pt.attr( "fill", "#ff0000" );
+			pt.attr({ "font-size": 20, "font-family": "Arial, Helvetica, sans-serif", "font-weight": "bold" });
 		}
 
 		function drawCurrentLocation (sensorId) {
@@ -159,7 +184,7 @@
 			} else {
 				var path2 = path + " L " + x + "," + y;
 				line = paper.path( path2 );
-				line.attr( { 'stroke-width':'15', "stroke":lineColor } );
+				line.attr( { 'stroke-width':'20', "stroke":lineColor } );
 			//#437DCC
 			}
 
@@ -175,7 +200,7 @@
 				return false;     // cancel default menu
 			};
 
-			paper=Raphael(document.getElementById('map-container'), 800, 1300);
+			paper=Raphael(document.getElementById('map-container'), 900, 1350);
 			paper.canvas.className.baseVal="mapersvg";
 
 	        loadMap();

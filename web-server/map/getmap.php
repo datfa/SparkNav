@@ -13,7 +13,7 @@ while ($row_rsItems = mysqli_fetch_assoc($rsItems)) {
 	//array_push ( $arRows, $row_rsItems );
 	$myObj->x = $row_rsItems[start_x] + 0;
 	$myObj->y = $row_rsItems[start_y] + 0;
-	$myObj->name = $row_rsItems[name];
+	$myObj->name = $row_rsItems[sensor_id];
 
 	//echo $myObj->x . " - " . $myObj->y . "\n";
 

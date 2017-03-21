@@ -38,7 +38,7 @@
         android:id="@+id/scanMapButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Scan" />
+        android:text="Navigate" />
 
 
 </LinearLayout>
