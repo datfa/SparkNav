@@ -46,6 +46,9 @@
 		var lineColor = mapPathColor[ mapPath % mapPathColor.length ];
 		var autoSelect = false;
 
+		var tx = 0;
+		var ty = 0;
+
 		function reset(){
 			paper.clear();
 			map = [];
@@ -76,8 +79,7 @@
 
 				var l = 0;
 				var len = p.length;
-				var tx = 0;
-				var ty = 0;
+
 				action = function() {
 					if (l < len) {
 						var obj = p[l];
@@ -143,6 +145,15 @@
 					newCircle.customAttr = { r:10, fill:lineColor };
 					newCircle.attr("fill", "#f00");
 					newCircle.attr("stroke", "#000");
+
+					if( obj.x == tx && obj.y == ty ) {
+						ec2 = paper.ellipse(x, y, 65, 45);
+			 			ec2.attr("stroke", "#000");
+			 			ec2.attr("fill", "#0F0");
+						pt2 = paper.text(x, y, "You have arrived!!");
+						pt2.attr( "fill", "#ffFF00" );
+						pt2.attr({ "font-size": 20, "font-family": "Arial, Helvetica, sans-serif", "font-weight": "bold" });
+					}
 				}
 			}
 		}
