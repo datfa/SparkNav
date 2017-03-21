@@ -29,7 +29,7 @@ public class SparkNavGcmListenerService extends GcmListenerService {
         if (from.startsWith("/topics/")) {
             Log.d(TAG, "Received a topic broadcast");
             // message received from some topic.
-            createNotification();
+            createNotification(message);
         }
         else {
             Log.d(TAG, "Received a downstream message");
@@ -39,7 +39,7 @@ public class SparkNavGcmListenerService extends GcmListenerService {
         Log.d(TAG, "Message: " + message);
     }
 
-    private void createNotification() {
+    private void createNotification(String message) {
         // create the NotificationCompat Builder
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
 
@@ -54,8 +54,8 @@ public class SparkNavGcmListenerService extends GcmListenerService {
 
         // Set the three required items all notifications must have
         builder.setSmallIcon(R.drawable.ic_stat_sample_notification); //if you want an icon
-        builder.setContentTitle("Attention Required");
-        builder.setContentText("UTD Emergency aleart!!");
+        builder.setContentTitle("Attention Required!!");
+        builder.setContentText("UTD Emergency aleart.");
 
         // Set the notification to cancel when the user taps on it
         builder.setAutoCancel(true);
@@ -71,8 +71,9 @@ public class SparkNavGcmListenerService extends GcmListenerService {
 
         // Add an expanded layout to the notification
         NotificationCompat.BigTextStyle bigTextStyle = new NotificationCompat.BigTextStyle();
-        bigTextStyle.setBigContentTitle("This is a big notification");
-        bigTextStyle.bigText(getResources().getString(R.string.LongMsg));
+        bigTextStyle.setBigContentTitle("UTD Emergency aleart!!");
+        //bigTextStyle.bigText(getResources().getString(R.string.LongMsg));
+        bigTextStyle.bigText(message);
         builder.setStyle(bigTextStyle);
 
         // Add action buttons to the Notification if they are supported

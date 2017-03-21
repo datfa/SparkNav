@@ -11,6 +11,7 @@ import android.bluetooth.le.ScanResult;
 import android.bluetooth.le.ScanSettings;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -48,7 +49,7 @@ public class NotificationResultActivity extends AppCompatActivity {
 
     /////////////////// BLE ONLY START ///////////////
 
-    private static final long SCAN_TIME_MILLIS = 10 * 1000; //1000 = 1sec
+    private static final long SCAN_TIME_MILLIS = 60 * 1000; //1000 = 1sec
 
     // Receives the runnable that stops scanning after SCAN_TIME_MILLIS.
     private static final Handler handler = new Handler(Looper.getMainLooper());
@@ -92,6 +93,9 @@ public class NotificationResultActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         setContentView(R.layout.activity_map);
 
         Log.i(TAG, "NotificationResultActivity => onCreate");
@@ -172,7 +176,8 @@ public class NotificationResultActivity extends AppCompatActivity {
         myWebView.getSettings().setLoadWithOverviewMode(true);  //for fit to screen
         myWebView.getSettings().setUseWideViewPort(true);       //for fit to screen
         myWebView.loadUrl("http://192.168.1.161/map/viewmap.php");
-        //myWebView.loadUrl("http://192.168.1.9/map");
+        //myWebView.loadUrl("http://192.168.43.131/map/viewmap.php");
+        //myWebView.loadUrl("http://192.168.1.9/map/viewmap.php");
 
 /*
         loadMapButton = (Button)findViewById(R.id.loadMapButton);

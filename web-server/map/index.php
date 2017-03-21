@@ -7,8 +7,8 @@
 	<style type="text/css">
 
 	.map-container {
-		width:600px;
-		height: 1100px;
+		width:800px;
+		height: 1300px;
 		position: relative;
 		margin: 25px auto;
 		border: 1px solid #EEE2E2;
@@ -43,7 +43,7 @@
 </head>
 <body>
 	<div id="map-container" class="map-container">
-		<img class="map-image" src="img/map.png" alt="" height=1100 width=600 />
+		<img class="map-image" src="img/map.png" alt="" height=1300 width=800 />
 	</div>
 	<div class="control">
 		<button type="button" id="newpath">New Path</button>
@@ -404,7 +404,7 @@
 				loadMap();
 			});
 
-			paper=Raphael(document.getElementById('map-container'), 600, 1100);
+			paper=Raphael(document.getElementById('map-container'), 800, 1300);
 			paper.canvas.className.baseVal="mapersvg";
 
 			$("#map-container").on("mousedown",function(e) {

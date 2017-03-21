@@ -7,8 +7,8 @@
 	<style type="text/css">
 
 	.map-container {
-		width:650px;
-		height: 1100px;
+		width:800px;
+		height: 1300px;
 		position: relative;
 		margin: 25px auto;
 		border: 1px solid #EEE2E2;
@@ -29,7 +29,7 @@
 </head>
 <body>
 	<div id="map-container" class="map-container">
-		<img class="map-image" src="img/map.png" alt="" height=1100 width=650 />
+		<img class="map-image" src="img/map.png" alt="" height=1300 width=800 />
 	</div>
 
 	<script type="text/javascript">
@@ -87,10 +87,10 @@
 							draw_path(obj.x, obj.y, obj.name);
 						}
 						l++;
-						setTimeout(action, 300);
+						setTimeout(action, 100);
 					}
 				};
-				setTimeout(action, 300);
+				setTimeout(action, 100);
 			});
 		}
 
@@ -175,7 +175,7 @@
 				return false;     // cancel default menu
 			};
 
-			paper=Raphael(document.getElementById('map-container'), 650, 1100);
+			paper=Raphael(document.getElementById('map-container'), 800, 1300);
 			paper.canvas.className.baseVal="mapersvg";
 
 	        loadMap();
