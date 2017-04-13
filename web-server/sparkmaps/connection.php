@@ -3,7 +3,7 @@
 $hostname = "localhost";
 $database = "sparknav";
 $username = "root";
-$password = "root123";
+$password = "GS4y%4t2TG2+";
 
 $connection = new mysqli(
 	$hostname,
