@@ -21,6 +21,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.ConsoleMessage;
+import android.webkit.JavascriptInterface;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,6 +43,7 @@ public class MainActivityFragment extends Fragment {
     private static final String TAG = MainActivityFragment.class.getSimpleName();
 
     private Button mapButton;
+    WebView webViewNormal;
 
     public MainActivityFragment() {
     }
@@ -61,7 +68,34 @@ public class MainActivityFragment extends Fragment {
             }
         });
 
+        webViewNormal = (WebView) rootView.findViewById(R.id.webviewNormal);
+        WebSettings webSettings = webViewNormal.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        webViewNormal.addJavascriptInterface(new MainActivityFragment.WebViewInterface(), "AndroidErrorReporter");
+        webViewNormal.setWebChromeClient(new MainActivityFragment.CustomWebChromeClient());
+        webViewNormal.setWebViewClient(new WebViewClient());
+        webViewNormal.getSettings().setLoadWithOverviewMode(true);  //for fit to screen
+        webViewNormal.getSettings().setUseWideViewPort(true);       //for fit to screen
+        webViewNormal.loadUrl(Constants.MAP_URL_NORMAL);
+
         return rootView;
     }
 
+    private class WebViewInterface{
+        @JavascriptInterface
+        public void onError(String error){
+            throw new Error(error);
+        }
+    }
+
+    class CustomWebChromeClient extends WebChromeClient {
+        private static final String TAG = "CustomWebChromeClient";
+
+        @Override
+        public boolean onConsoleMessage(ConsoleMessage cm) {
+            Log.d(TAG, String.format("====> %s @ %d: %s", cm.message(),
+                    cm.lineNumber(), cm.sourceId()));
+            return true;
+        }
+    }
 }

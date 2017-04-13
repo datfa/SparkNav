@@ -7,16 +7,18 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <!-- Bluetooth permissions and features -->
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
     <uses-feature
         android:name="android.hardware.bluetooth_le"
-        android:required="true"/>
+        android:required="true" />
 
-    <!-- Permissions to fetch user data over network, contact the proximity beacon service,
-       and access location -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <!--
+       Permissions to fetch user data over network, contact the proximity beacon service,
+       and access location
+    -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <permission
         android:name="edu.utdallas.emse.sparknav.permission.C2D_MESSAGE"
@@ -32,9 +34,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-       <!-- <meta-data
+        <!--
+            <meta-data
             android:name="com.google.android.nearby.messages.API_KEY"
-            android:value="AIzaSyBitU-Q-hE6X4ewLsGQiTwz5bPAXJu5hxs" />-->
+            android:value="AIzaSyBitU-Q-hE6X4ewLsGQiTwz5bPAXJu5hxs" />
+        -->
 
         <activity
             android:name=".MainActivity"
@@ -43,10 +47,10 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
 
         <!-- this class receives messages from GCM. -->
         <receiver
@@ -55,11 +59,12 @@
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
                 <category android:name="edu.utdallas.emse.sparknav" />
             </intent-filter>
         </receiver>
 
-         <!--
+        <!--
         the GcmListenerService enables various messaging features and provides
         the place where your code overrides the onMessageReceived method
         -->
@@ -86,10 +91,10 @@
         <!-- this service is used to kick off the token retrieval off the main UI thread -->
         <service
             android:name=".GcmRegisterService"
-            android:exported="false">
-        </service>
+            android:exported="false"></service>
 
-        <!--<receiver
+        <!--
+        <receiver
             android:name=".GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
@@ -97,10 +102,21 @@
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <category android:name="edu.utdallas.emse.sparknav" />
             </intent-filter>
-        </receiver>-->
+        </receiver>
+        -->
 
-        <activity android:name=".MapActivity"></activity>
-        <activity android:name=".NotificationResultActivity"></activity>
+        <activity android:name=".MapActivity" />
+        <activity android:name=".NotificationResultActivity" />
+
+        <activity android:name=".SearchableActivity"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/searchable"/>
+        </activity>
+
     </application>
 
 </manifest>

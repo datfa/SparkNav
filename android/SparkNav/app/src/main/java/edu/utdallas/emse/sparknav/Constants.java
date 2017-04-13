@@ -10,10 +10,15 @@ public class Constants {
     public static final String KEY_REGISTRATION_COMPLETE = "REGISTRATION_COMPLETE";
     public static final String KEY_REGISTRATION_RECEIVER = "REGISTRATION_RECEIVER";
 
-
     ///// FOR BLE START ////
     static final int REQUEST_CODE_ENABLE_BLE = 1001;
-
     ///// FOR BLE END ////
+
+    public static final String MAP_URL_ROOT = "http://192.168.1.166/map/";
+    //public static final String MAP_URL_ROOT = "http://192.168.1.9/map/";
+    //public static final String MAP_URL_ROOT = "http://ec2-35-166-130-129.us-west-2.compute.amazonaws.com/map/";
+
+    public static final String MAP_URL_EMERGENCY = MAP_URL_ROOT + "viewmap.php";
+    public static final String MAP_URL_NORMAL = MAP_URL_ROOT + "normalmap.php";
 
 }

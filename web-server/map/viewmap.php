@@ -67,6 +67,44 @@
 
 			console.log("=====> COOL: loadMap() called");
 
+			var url = "http://localhost:8080/shortest?src=62&dst=65&callback=?";
+			$.getJSON(url, function(result) {
+			   //alert(JSON.parse(result));
+			   //var resp = JSON.parse(result);
+			    var p = $.parseJSON(result);
+
+				console.log(p);
+
+				reset();
+
+				drawEmergency(330, 1030);
+
+				var l = 0;
+				var len = p.length;
+
+				action = function() {
+					if (l < len) {
+						var obj = p[l];
+						//console.log(obj.x, obj.y);
+						if( obj.x == 0 && obj.y == 0 ) {
+							//skip (0,0)
+						} else {
+							var pathStr = "draw_path: " + obj.x + ", " + obj.y + " -> " + obj.name;
+							//console.log(pathStr);
+
+							draw_path(obj.x, obj.y, obj.name);
+							tx = obj.x;
+							ty = obj.y;
+						}
+						l++;
+						setTimeout(action, 100);
+					} else {
+						drawExit(tx, ty);
+					}
+				};
+				setTimeout(action, 100);
+			});
+/*
 			$.get( "getmap.php", function( data ) {
 				//alert( "Data Loaded: " + data );
 				//console.log(data);
@@ -102,7 +140,7 @@
 				};
 				setTimeout(action, 100);
 			});
-
+*/
 		}
 
 		function makeCircle (x,y) {

@@ -1,0 +1,15 @@
+{
+  "name": "SparkNav",
+  "version": "1.0.0",
+  "main": "getmap.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "*",
+    "mysql": "*",
+    "body-parser": "*"
+  },
+  "author": "Samiul A Chowdhury",
+  "license": "FREE"
+}
