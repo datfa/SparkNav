@@ -10,6 +10,7 @@ import android.bluetooth.le.ScanResult;
 import android.bluetooth.le.ScanSettings;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
@@ -27,7 +28,10 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +48,9 @@ public class MainActivityFragment extends Fragment {
 
     private Button mapButton;
     WebView webViewNormal;
+    ImageView imageViewSparkNav;
+
+    String[] rooms = {"2.11", "2.12", "3.11", "3.12", "4.11", "4.22", "4.12", "4.13"};
 
     public MainActivityFragment() {
     }
@@ -63,10 +70,26 @@ public class MainActivityFragment extends Fragment {
         mapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+/*
                 Intent intent = new Intent(getActivity(), NotificationResultActivity.class);
                 startActivity(intent);
+*/
+                imageViewSparkNav.setVisibility(View.GONE);
+                webViewNormal.setVisibility(View.VISIBLE);
             }
         });
+
+        //Creating the instance of ArrayAdapter containing list of fruit names
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>
+                (getActivity(), android.R.layout.select_dialog_item, rooms);
+        //Getting the instance of AutoCompleteTextView
+        AutoCompleteTextView actv = (AutoCompleteTextView) rootView.findViewById(R.id.autoCompleteTextView);
+        actv.setThreshold(1);//will start working from first character
+        actv.setAdapter(adapter);//setting the adapter data into the AutoCompleteTextView
+        actv.setTextColor(Color.RED);
+
+        imageViewSparkNav = (ImageView) rootView.findViewById(R.id.imageSparkNav);
+
 
         webViewNormal = (WebView) rootView.findViewById(R.id.webviewNormal);
         WebSettings webSettings = webViewNormal.getSettings();
@@ -78,6 +101,7 @@ public class MainActivityFragment extends Fragment {
         webViewNormal.getSettings().setUseWideViewPort(true);       //for fit to screen
         webViewNormal.loadUrl(Constants.MAP_URL_NORMAL);
 
+        webViewNormal.setVisibility(View.GONE);
         return rootView;
     }
 

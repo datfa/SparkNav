@@ -5,6 +5,6 @@
     <string name="reg_error">There seems to have been an error registering with GCM. :-(</string>
     <string name="LongMsg">This is a notification style that can contain a large amount of text. It works really well when you have a large amount of information
     to display in the notification area and want the user to be able to expand the message to see all of the content.</string>
-    <string name="search_hint">Search Room or Name or Event</string>
+    <string name="search_hint">Search Room/Name/Event</string>
     <string name="action_search">Search</string>
 </resources>
