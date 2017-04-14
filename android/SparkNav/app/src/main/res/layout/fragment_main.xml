@@ -17,32 +17,112 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />-->
 
-  <!--  <Button
-        android:id="@+id/scanButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Scan"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentTop="true"/>-->
+    <!--  <Button
+          android:id="@+id/scanButton"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Scan"
+          android:layout_centerHorizontal="true"
+          android:layout_alignParentTop="true"/>-->
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <WebView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/webviewNormal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
 
 
+        </WebView>
+        <!--android:layout_weight="1"-->
 
-    <WebView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/webviewNormal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
+        <ImageView
+            android:id="@+id/imageSparkNav"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/spark_nav"
+            android:alpha=".80"/>
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="20dp">
 
-    </WebView>
+            <AutoCompleteTextView
+                android:id="@+id/autoCompleteTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="12"
+                android:hint="@string/search_hint"
+                android:text=""
+                android:maxLines="1"
+                android:textColor="#000">
+                <requestFocus />
+            </AutoCompleteTextView>
 
+            <Button
+                android:id="@+id/mapButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:text="Map" />
+        </LinearLayout>
 
-    <Button
-        android:id="@+id/mapButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Map"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"/>
+    </FrameLayout>
+
 
 </RelativeLayout>
+
+
+    <!--<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+    &lt;!&ndash;    <ImageView
+            android:src="@drawable/ic_launcher"
+            android:scaleType="fitCenter"
+            android:layout_height="250px"
+            android:layout_width="250px"/>
+
+        <TextView
+            android:text="Frame Demo"
+            android:textSize="30px"
+            android:textStyle="bold"
+            android:layout_height="fill_parent"
+            android:layout_width="fill_parent"
+            android:gravity="center"/>&ndash;&gt;
+
+
+        <WebView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/webviewNormal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+        </WebView>
+
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:ems="10"
+            android:text="">
+
+            <requestFocus />
+        </AutoCompleteTextView>
+
+        <Button
+            android:id="@+id/mapButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Map"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"/>
+    </FrameLayout>-->
