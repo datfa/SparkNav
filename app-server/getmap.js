@@ -57,50 +57,6 @@ app.get('/map', function(req, res){
 	
 
 });
-
-/*function get_neighbors (src, dst, route) {
-	var all_paths = [];
-	var bidirectional_path = [];
-	var neighbors = [];
-
-	console.log("SRC: ", src);
-
-	var query = "SELECT * FROM path";
-	connection.query(query, function (error, results, fields) {
-		if (error) throw error;
-		all_paths = results;
-
-		//console.log("PATH: ", all_paths);
-
-		for(var i in all_paths) {
-			var path = all_paths[i];
-			//console.log("PATH: ", JSON.stringify(path);
-			bidirectional_path.push({loc_start: path.loc_start, loc_end: path.loc_end});
-			bidirectional_path.push({loc_start: path.loc_end, loc_end: path.loc_start});
-		}
-
-		console.log("BI-PATH: ", JSON.stringify(bidirectional_path));
-		
-		for(var j in bidirectional_path) {
-			if( bidirectional_path[j].loc_start == src ) {
-				neighbors.push( bidirectional_path[j].loc_end );	
-			}			
-		}
-
-		for(var k in neighbors) {
-			if( neighbors[k] == dst ) {
-				path_found(route);
-			} else {
-				route.push( neighbors[k] );
-				get_neighbors(src, dst, route);
-			}
-		}
-
-		//console.log("NEIGHBOR: ", JSON.stringify(neighbors));
-		
-	});
-	
-}*/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 function check_loop (node, final_path) {
@@ -239,6 +195,70 @@ app.get('/shortest', function(req, res){
 	var src = req.query.src;
 	var dst = req.query.dst;
 	do_queries_find_shortest_path( src, dst, res );
+});
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+app.get('/getrooms', function(req, res){	
+	var loc_id = req.query.loc;
+	var room = req.query.room;
+
+	var rooms_persons_events = [];
+
+	var query = "SELECT * FROM room" ;
+	connection.query(query, function (error, results, fields) {
+		if (error) throw error;
+		//console.log(JSON.stringify(results));
+		rooms_persons_events = results;
+	});	
+
+	var query = "SELECT r.ID, rp.name , r.loc_id FROM room r, room_person rp where r.ID = rp.room_id" ;
+	connection.query(query, function (error, results, fields) {
+		if (error) throw error;
+		rooms_persons_events = rooms_persons_events.concat( results );		
+		console.log(JSON.stringify(rooms_persons_events));
+		res.setHeader('Content-Type', 'application/json');
+		res.jsonp(rooms_persons_events);
+	});	
+});
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+app.get('/saveroom', function(req, res){	
+	var loc_id = req.query.loc;
+	var data = req.query.data;
+
+	var query = "SELECT * FROM room WHERE loc_id=" + loc_id ;
+	connection.query(query, function (error, results, fields) {
+		if (error) throw error;
+		if( results.length > 0 && results[0].loc_id == loc_id ) {
+			var query = "UPDATE room SET name ='" + data + "' WHERE loc_id = " + loc_id;
+			connection.query(query);
+		} else {
+			var query = "INSERT INTO room SET name ='" + data + "', loc_id = " + loc_id;
+			connection.query(query);
+		}
+	});
+	
+    res.jsonp("ROOM SAVED");
+});
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+app.get('/savebeacon', function(req, res){	
+	var loc_id = req.query.loc;
+	var data = req.query.data;
+
+	var query = "SELECT * FROM sensor WHERE loc_id=" + loc_id ;
+	connection.query(query, function (error, results, fields) {
+		if (error) throw error;
+		if( results.length > 0 && results[0].loc_id == loc_id ) {
+			var query = "UPDATE sensor SET sensor_id ='" + data + "' WHERE loc_id = " + loc_id;
+			connection.query(query);
+		} else {
+			var query = "INSERT INTO sensor SET sensor_id ='" + data + "', loc_id = " + loc_id;
+			connection.query(query);
+		}
+	});
+	
+    res.jsonp("BEACON SAVED");
 });
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////

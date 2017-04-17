@@ -46,7 +46,10 @@ public class SparkNavGcmListenerService extends GcmListenerService {
         // Create the intent that will start the ResultActivity when the user
         // taps the notification or chooses an action button
         //Intent intent = new Intent(getApplicationContext(), NotificationResultActivity.class);
-        Intent intent = new Intent(this, NotificationResultActivity.class);
+
+        //Intent intent = new Intent(this, NotificationResultActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
+
         // Store the notification ID so we can cancel it later in the ResultActivity
         intent.putExtra("notifyID", NOTIFY_ID);
         //PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), NOTIFY_ID, intent, PendingIntent.FLAG_CANCEL_CURRENT);
