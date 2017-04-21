@@ -43,7 +43,7 @@
 </head>
 <body>
 	<div id="map-container" class="map-container">
-		<img class="map-image" src="img/map.png" alt="" height=1350 width=900 />
+		<img class="map-image" src="img/EC2.png" alt="" height=1350 width=900 />
 	</div>
 	<div class="control">
 		<button type="button" id="newpath">New Path</button>

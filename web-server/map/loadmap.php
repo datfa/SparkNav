@@ -131,49 +131,6 @@
 
 		}
 
-
-		function newPath(){
-			console.log('newPath()');
-			mapPath++;
-			points = [];
-			currentIndex = 0;
-			path = "";
-			line = null;
-			lineColor = mapPathColor[ mapPath % 4 ];
-		}
-
-		function draw_path(x, y, name) {
-			x = Math.round(x);
-			y = Math.round(y);
-			points[currentIndex] = {x:x, y:y, name:name};
-
-			if(path=="") {
-				path = "M " + x + "," + y;
-			}else{
-				path += " L " + x + "," + y;
-			}
-			if(line) {
-				if( currentIndex > 0 ) {
-					line.animate( {path:path}, 200, function() {
-						//r.animate({path:"M190 60 L 210 90"}, 2000);
-					});
-				} else {
-					line.attr("path", path);
-				}
-			} else {
-				var path2 = path + " L " + x + "," + y;
-				line = paper.path( path2 );
-				line.attr( { 'stroke-width':'20', "stroke":lineColor } );
-			//#437DCC
-			}
-
-			autoSelect = true;
-
-			currentIndex++;
-			map[mapPath] = points;
-			//console.log(JSON.stringify( points ) );
-		}
-
 		$(document).ready(function() {
 			window.oncontextmenu = function () {
 				return false;     // cancel default menu

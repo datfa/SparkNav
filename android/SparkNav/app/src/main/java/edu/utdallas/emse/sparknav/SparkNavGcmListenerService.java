@@ -25,21 +25,22 @@ public class SparkNavGcmListenerService extends GcmListenerService {
     @Override
     public void onMessageReceived(String from, Bundle data) {
         String message = data.getString("message");
+        String location = data.getString("location");
 
         if (from.startsWith("/topics/")) {
-            Log.d(TAG, "Received a topic broadcast");
+            Log.i(TAG, "Received a topic broadcast: location => " + location);
             // message received from some topic.
-            createNotification(message);
+            createNotification(message, location);
         }
         else {
-            Log.d(TAG, "Received a downstream message");
+            Log.i(TAG, "Received a downstream message");
             // normal downstream message.
         }
         Log.d(TAG, "From: " + from);
         Log.d(TAG, "Message: " + message);
     }
 
-    private void createNotification(String message) {
+    private void createNotification(String message, String location) {
         // create the NotificationCompat Builder
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
 
@@ -47,11 +48,14 @@ public class SparkNavGcmListenerService extends GcmListenerService {
         // taps the notification or chooses an action button
         //Intent intent = new Intent(getApplicationContext(), NotificationResultActivity.class);
 
-        //Intent intent = new Intent(this, NotificationResultActivity.class);
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, NotificationResultActivity.class);
+        //Intent intent = new Intent(this, MainActivity.class);
 
         // Store the notification ID so we can cancel it later in the ResultActivity
         intent.putExtra("notifyID", NOTIFY_ID);
+
+        intent.putExtra("emergencyLocation", location);
+
         //PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), NOTIFY_ID, intent, PendingIntent.FLAG_CANCEL_CURRENT);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, NOTIFY_ID, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
@@ -108,6 +112,6 @@ public class SparkNavGcmListenerService extends GcmListenerService {
         NotificationManager mgr = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
         mgr.notify(NOTIFY_ID, notification);
 
-        Log.d(TAG, "====> NOTIFICATION CREATED!!");
+        Log.i(TAG, "====> NOTIFICATION CREATED!!");
     }
 }

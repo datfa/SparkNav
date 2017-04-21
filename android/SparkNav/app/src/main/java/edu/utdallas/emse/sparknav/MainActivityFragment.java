@@ -146,9 +146,15 @@ public class MainActivityFragment extends Fragment {
         mapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               /* Intent intent = new Intent(getActivity(), NotificationResultActivity.class);
-                startActivity(intent);*/
-                imageViewSparkNav.setVisibility(View.GONE);
+                Intent intent = new Intent(getActivity(), NotificationResultActivity.class);
+                intent.putExtra("emergencyLocation", "NONE-EMERGENCY");
+                String room_name = autoCompleteTextView.getText().toString();
+                String dst_loc_id = map.get(room_name);
+                Log.i(TAG, "DEST LOC ID: " + dst_loc_id);
+                intent.putExtra("dst_loc_id", dst_loc_id);
+                startActivity(intent);
+
+               /* imageViewSparkNav.setVisibility(View.GONE);
                 webViewNormal.setVisibility(View.VISIBLE);
                 mapButton.setVisibility(View.GONE);
                 autoCompleteTextView.setVisibility(View.GONE);
@@ -166,7 +172,7 @@ public class MainActivityFragment extends Fragment {
                 String dst_loc_id = map.get(room_name);
                 Log.i(TAG, "DEST LOC ID: " + dst_loc_id);
                 String buildFunctionCall = "loadMap(" + src_loc_id + ", " + dst_loc_id + ");";
-                callJavaScriptMethod(buildFunctionCall);
+                callJavaScriptMethod(buildFunctionCall);*/
             }
         });
 

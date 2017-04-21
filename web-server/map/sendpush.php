@@ -1,6 +1,6 @@
 <?php
-$val = $_POST["field5"];
-
+$message = $_POST["field5"];
+$location = $_POST["field3"];
 //curl -H "Content-Type:application/json" -H "Authorization:key=AIzaSyDuY7yVM2QJEHYDvi2p6Qm_5vKYeP37Yq8" --data '{ "to": "/topics/topic1", "data": {"message": "Topic1 Message from GCM server"}}' https://gcm-http.googleapis.com/gcm/send
 
 // API access key from Google API's Console
@@ -12,7 +12,8 @@ $registrationIds = "/topics/topic1";
 // prep the bundle
 $msg = array
 	(
-	'message' => $val,
+	'message' => $message,
+	'location' => $location,
 );
 $fields = array
 	(

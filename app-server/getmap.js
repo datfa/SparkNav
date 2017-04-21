@@ -198,6 +198,18 @@ app.get('/shortest', function(req, res){
 });
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
+app.get('/getexits', function(req, res){	
+
+	var query = "SELECT * FROM exits" ;
+	connection.query(query, function (error, results, fields) {
+		if (error) throw error;
+		console.log(JSON.stringify(results));
+		res.setHeader('Content-Type', 'application/json');
+		res.jsonp(JSON.stringify(results));
+	});	
+});
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get('/getrooms', function(req, res){	
 	var loc_id = req.query.loc;
 	var room = req.query.room;
@@ -242,23 +254,77 @@ app.get('/saveroom', function(req, res){
 });
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
-app.get('/savebeacon', function(req, res){	
+app.get('/saveexit', function(req, res){	
 	var loc_id = req.query.loc;
 	var data = req.query.data;
 
-	var query = "SELECT * FROM sensor WHERE loc_id=" + loc_id ;
+	var query = "SELECT * FROM exits WHERE loc_id=" + loc_id ;
 	connection.query(query, function (error, results, fields) {
 		if (error) throw error;
 		if( results.length > 0 && results[0].loc_id == loc_id ) {
-			var query = "UPDATE sensor SET sensor_id ='" + data + "' WHERE loc_id = " + loc_id;
+			var query = "UPDATE exits SET name ='" + data + "' WHERE loc_id = " + loc_id;
 			connection.query(query);
 		} else {
-			var query = "INSERT INTO sensor SET sensor_id ='" + data + "', loc_id = " + loc_id;
+			var query = "INSERT INTO exits SET name ='" + data + "', loc_id = " + loc_id;
 			connection.query(query);
 		}
 	});
 	
+    res.jsonp("EXIT SAVED");
+});
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+app.get('/savebeacon', function(req, res){	
+	var loc_id = req.query.loc;
+	var data = req.query.data;
+
+	var query = "SELECT * FROM beacon_location WHERE beacon_id=" + data ;
+	connection.query(query, function (error, results, fields) {
+		if (error) throw error;
+		console.log("THIS BEACON ALLREADY ADDED SO REMOVING FROM PREVIOUS LOCATION: ", data);
+		var query = "UPDATE beacon_location SET beacon_id = 0 WHERE beacon_id = " + data;
+		connection.query(query);
+	});
+
+	var query = "SELECT * FROM beacon_location WHERE loc_id=" + loc_id ;
+	connection.query(query, function (error, results, fields) {
+		if (error) throw error;
+		if( results.length > 0 && results[0].loc_id == loc_id ) {
+			var query = "UPDATE beacon_location SET beacon_id =" + data + " WHERE loc_id = " + loc_id;
+			connection.query(query);
+			console.log("UPDATING BEACON: ", loc_id);
+		} else {
+			var query = "INSERT INTO beacon_location SET beacon_id =" + data + ", loc_id = " + loc_id;
+			connection.query(query);
+			console.log("ADDING BEACON: ", loc_id);
+		}
+	});
+	
     res.jsonp("BEACON SAVED");
+});
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+app.get('/getbeacons', function(req, res){	
+
+	var query = "SELECT ID, name FROM beacon" ;
+	connection.query(query, function (error, results, fields) {
+		if (error) throw error;
+		console.log(JSON.stringify(results));
+		res.setHeader('Content-Type', 'application/json');
+		res.jsonp(JSON.stringify(results));
+	});	
+});
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+app.get('/getbeaconlocations', function(req, res){	
+
+	var query = "SELECT b.uid uid, bl.loc_id loc_id FROM beacon_location bl, beacon b WHERE b.ID = bl.beacon_id" ;
+	connection.query(query, function (error, results, fields) {
+		if (error) throw error;
+		console.log(JSON.stringify(results));
+		res.setHeader('Content-Type', 'application/json');
+		res.jsonp(JSON.stringify(results));
+	});	
 });
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////

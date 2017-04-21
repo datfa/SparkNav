@@ -8,11 +8,11 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.nearby.Nearby;
-import com.google.android.gms.nearby.messages.Message;
-import com.google.android.gms.nearby.messages.MessageListener;
-import com.google.android.gms.nearby.messages.Strategy;
-import com.google.android.gms.nearby.messages.SubscribeOptions;
+//import com.google.android.gms.nearby.Nearby;
+//import com.google.android.gms.nearby.messages.Message;
+//import com.google.android.gms.nearby.messages.MessageListener;
+//import com.google.android.gms.nearby.messages.Strategy;
+//import com.google.android.gms.nearby.messages.SubscribeOptions;
 
 public class MapActivity extends AppCompatActivity {
 
