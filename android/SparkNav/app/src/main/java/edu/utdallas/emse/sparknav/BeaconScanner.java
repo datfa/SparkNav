@@ -36,14 +36,18 @@ public class BeaconScanner {
     WebView myWebView;
 
     boolean sourceDetected;
+    double lastReadDistance;
+
     String src_loc_id;
     String dst_loc_id;
+
+    long scanCount;
 
     boolean alreadyScanning;
 
     /////////////////// BLE ONLY START ///////////////
 
-    private static final long SCAN_TIME_MILLIS = 60 * 1000; //1000 = 1sec
+    private static final long SCAN_TIME_MILLIS = 3 * 60 * 1000; //1000 = 1sec, 60 * 1000 = 1 min
 
     // Receives the runnable that stops scanning after SCAN_TIME_MILLIS.
     private static final Handler handler = new Handler(Looper.getMainLooper());
@@ -88,6 +92,8 @@ public class BeaconScanner {
         this.myWebView = myWebView;
         this.dst_loc_id = dst_loc_id;
 
+        lastReadDistance = 0;
+        scanCount = 0;
         sourceDetected = false;
         alreadyScanning = false;
 
@@ -96,6 +102,7 @@ public class BeaconScanner {
         scanCallback = new ScanCallback() {
             @Override
             public void onScanResult(int callbackType, ScanResult result) {
+                scanCount++;
                 ScanRecord scanRecord = result.getScanRecord();
                 if (scanRecord == null) {
                     Log.w(TAG, "==> Null ScanRecord for device " + result.getDevice().getAddress());
@@ -126,18 +133,11 @@ public class BeaconScanner {
                 addUpdateBeaconList(arrayList, beaconID, rssi);
 
                 String minDistanceBeacon = beaconWithMinDistance(arrayList);
-                Log.i(TAG, "==> Beacon with min distance: " + minDistanceBeacon);
-
-                //String buidlFunctionCall = "drawCurrentLocation('" + beaconID + String.valueOf(idIndex)+ "');";
-                String buidlFunctionCall = "drawCurrentLocation('" + minDistanceBeacon + "');";
-                //callJavaScriptMethod("drawCurrentLocation('0001020304050607081a04514000b000');");
-                //callJavaScriptMethod(buidlFunctionCall);
-
-                update_current_location( minDistanceBeacon );
-
-                //beaconDistance = (TextView) getActivity().findViewById(R.id.beaconDistance);
-                //beaconDistance.setText(distance);
-//                insertIntoListAndFetchStatus(beacon);
+                //Log.i(TAG, "ScanCount ==> " + scanCount);
+                if( 4 < scanCount) {
+                    update_current_location(minDistanceBeacon);
+                    removeDeadBeacon(arrayList);
+                }
             }
 
             @Override
@@ -152,7 +152,12 @@ public class BeaconScanner {
 
     private void update_current_location(String beaconId) {
         String buildFunctionCall;
+        beaconId = beaconId.toUpperCase();
         if( false == sourceDetected ) {
+            if( 1 < lastReadDistance ) {
+                Log.i(TAG, "update_current_location: Ignore any beacon which are far than 1 meter");
+                return;
+            }
             sourceDetected = true;
 //            src_loc_id = getLocIdFromBeaconId( beaconId );
             if(dst_loc_id == null) {
@@ -160,11 +165,11 @@ public class BeaconScanner {
             } else {
                 buildFunctionCall = "loadMapBeacon('" + beaconId + "', " + dst_loc_id + ");";
             }
-
-            Log.i(TAG, "update_current_location: " + buildFunctionCall);
+            Log.i(TAG, buildFunctionCall);
             callJavaScriptMethod(buildFunctionCall);
         } else {
             buildFunctionCall = "drawCurrentLocation('" + beaconId + "');";
+            Log.i(TAG, buildFunctionCall);
             callJavaScriptMethod(buildFunctionCall);
         }
     }
@@ -172,14 +177,18 @@ public class BeaconScanner {
     private String beaconWithMinDistance(ArrayList<Beacon> list) {
         double minDistance = 1000;
         String beaconID = "NONE";
+        String beaconName = "NONE";
         for (Beacon beacon : list) {
             double avgDistance = beacon.getAvgDistance();
             if( minDistance > avgDistance ) {
                 minDistance = avgDistance;
                 beaconID = beacon.getId();
+                beaconName = beacon.getName();
             }
         }
 
+        lastReadDistance = minDistance;
+        Log.i(TAG, "Min distance Beacon ==> " + beaconName);
         return beaconID;
     }
 
@@ -192,6 +201,15 @@ public class BeaconScanner {
         }
         Beacon newBeacon = new Beacon(id, rssi);
         list.add(newBeacon);
+    }
+
+    private void removeDeadBeacon(ArrayList<Beacon> list) {
+        long currentTimeStamp = System.currentTimeMillis()/1000;
+        for (Beacon beacon : list) {
+            if ( 4 < ( currentTimeStamp - beacon.getLastUpdateTimeStamp()) ) {
+                beacon.updateBeacon(-200);
+            }
+        }
     }
 
     private void createScanner() {
@@ -221,7 +239,7 @@ public class BeaconScanner {
 
     public void startScanner() {
         if( alreadyScanning ) {
-            Log.i(TAG, "=====> Already Scanning");
+            Log.i(TAG, "===================> Already Scanning <====================");
             return;
         }
         alreadyScanning = true;

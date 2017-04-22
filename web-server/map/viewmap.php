@@ -39,6 +39,7 @@
 		var paper = null;
 		var points = [];
 		var currentIndex = 0;
+		var usedIndex = 0;
 		var path = "";
 		var used_path = "";
 		var lastCircle = null;
@@ -61,6 +62,7 @@
 			mapPath = 0;
 			points = [];
 			currentIndex = 0;
+			usedIndex = 0;
 			path = "";
 			line = null;
 			used_line = null;
@@ -78,7 +80,7 @@
 
 			$.getJSON(url, function(result) {
 			    var p = $.parseJSON(result);
-			    console.log("=====> ", p);
+			    console.log(" EXITS: ==> ", p);
 
 			    for( var i in p) {
 			    	dst = p[i].loc_id; //TODO: now taking the first exit, later make it the closest one
@@ -106,9 +108,9 @@
 			    beacons = p;
 
 			    for(var i in beacons) {
-					console.log("=====> ", beacons[i].uid);
-					console.log(beaconId);
-					if( beacons[i].uid == beaconId ) {
+//					console.log("=====> ", beacons[i].uid);
+//					console.log(beaconId);
+					if( beacons[i].uid.toUpperCase() == beaconId.toUpperCase() ) {
 						loadMap( beacons[i].loc_id, dst, isEmergency );
 						break;
 					}
@@ -118,7 +120,7 @@
 
 		function loadMap(src, dst, isEmergency) {
 
-			console.log("loadMap(", src, ",", dst, ") => ", REST_URL);
+			console.log("loadMap(", src, ",", dst, ")");
 
 			//var url = "http://localhost:8080/shortest?src=62&dst=65&callback=?";
 			var url = REST_URL + "/shortest?src=" + src + "&dst=" + dst + "&callback=?";
@@ -127,10 +129,12 @@
 			   //console.log(result);
 			   //var resp = JSON.parse(result);
 			    var p = $.parseJSON(result);
-				console.log(p);
+				//console.log(p);
 				reset();
 				if( true == isEmergency ) {
-					drawEmergency(330, 1030);
+					//drawEmergency(330, 1030);
+					drawEmergency(67, 710);
+					drawEmergency(220, 275);
 				}
 				var l = 0;
 				var len = p.length;
@@ -143,7 +147,7 @@
 							//skip (0,0)
 						} else {
 							var pathStr = "draw_path: " + obj.x + ", " + obj.y + " -> " + obj.ID;
-							console.log(pathStr);
+							//console.log(pathStr);
 
 							draw_path(obj.x, obj.y, obj.ID);
 							tx = obj.x;
@@ -156,6 +160,7 @@
 							drawExit(tx, ty, "EXIT");
 						} else {
 							drawExit(tx, ty, "2.311");
+							//drawCurrentLocation('0001020304050607081C04514000B000');
 						}
 					}
 				};
@@ -221,7 +226,7 @@
  			ec.attr("fill", "#fF0");
 			pt = paper.text(x, y, name);
 			pt.attr( "fill", "#ff0000" );
-			pt.attr({ "font-size": 20, "font-family": "Arial, Helvetica, sans-serif", "font-weight": "bold" });
+			pt.attr({ "font-size": 24, "font-family": "Arial, Helvetica, sans-serif", "font-weight": "bold" });
 		}
 
 
@@ -235,7 +240,7 @@
 				var obj = p[i];
 				if( obj.ID == loc_id ) {
 					var tmpCoordinate = "COORDINATE: " + obj.x + "," + obj.y + " - " + obj.ID + " - " + loc_id;
-					console.log(tmpCoordinate);
+					//console.log(tmpCoordinate);
 					// console.log('COOL FOUND SENSOR ON MAP: ', sensorId);
 					deleteCircle();
 					newCircle = paper.circle(obj.x,obj.y, 20);
@@ -265,14 +270,18 @@
 
 
 		function drawCurrentLocation (beaconId) {
-			var location = "drawCurrentLocation: " + beaconId;
-			console.log(location);
+			var location = "drawCurrentLocation ====> " + beaconId;
+			//console.log(location);
 			var loc_id;
 
+			if( 1 > beacons.length ) {
+				console.log("MAP NOT LOADED");
+			}
+
 			for(var i in beacons) {
-				//console.log("=====> ", beacons[i].uid);
-				//console.log(beaconId);
-				if( beacons[i].uid == beaconId ) {
+				//console.log(beaconId, " ==> ", beacons[i].uid);
+				if( beacons[i].uid.toUpperCase() == beaconId.toUpperCase() ) {
+					//console.log(beaconId, " ==> ", beacons[i].uid);
 					loc_id = beacons[i].loc_id;
 					break;
 				}
@@ -394,8 +403,8 @@
 			paper.canvas.className.baseVal="mapersvg";
 
 	        //loadMap();
-	        loadMapBeacon('0001020304050607081004514000b000', 10);
-	        //loadMapBeaconExit('0001020304050607081304514000b000');
+	        //loadMapBeacon('0001020304050607081C04514000b000', 1);
+	        //drawCurrentLocation('0001020304050607081C04514000B000');
 	        //loadMapBeaconExit('0001020304050607081004514000b000');
 	        //loadMap(62, 68)
 		});

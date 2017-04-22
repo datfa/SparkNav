@@ -8,23 +8,28 @@ import android.util.Log;
 
 public class Beacon {
     public static final String TAG = "BeaconClass";
-    public static final int MAX_COUNT = 5;
+    public static final int MAX_COUNT_AVG = 10;
 
     String id;
+    String name;
     int[] rssi = new int[10];
     double[] distance = new double[10];
     int head;
     int count;
     int txPower;
+    long lastUpdateTimeStamp;
 
     public Beacon(String id, int rssi) {
         head = 0;
         count = 1;
         txPower = -51;
         this.id = id;
+        this.name = id.substring(18, 20);
         this.rssi[head] = rssi;
+        this.lastUpdateTimeStamp = System.currentTimeMillis()/1000;
         this.distance[head] = 10 * getDistance( rssi, txPower );
-        Log.i(TAG, "==> newBeacon: " + id + " RSSI: " + rssi +" Distance: " + String.valueOf(this.distance[head]) +
+//        Log.i(TAG, "==> newBeacon: " + id + " RSSI: " + rssi +" Distance: " + String.valueOf(this.distance[head]) +
+        Log.i(TAG, "==> newBeacon: " + name + " RSSI: " + rssi +" Distance: " + String.valueOf(this.distance[head]) +
                 " Head: " + String.valueOf(head) + " Count: " + String.valueOf(count) );
         head++;
     }
@@ -33,20 +38,30 @@ public class Beacon {
         return id;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public long getLastUpdateTimeStamp() {
+        return lastUpdateTimeStamp;
+    }
+
     public void setId(String id) {
         this.id = id;
     }
 
     public void updateBeacon(int rssi) {
-            if(count < MAX_COUNT) { //rssi/distance circular array will be full when MAX_COUNT
+            if(count < MAX_COUNT_AVG) { //rssi/distance circular array will be full when MAX_COUNT_AVG
                 count++;
             }
         this.rssi[head] = rssi;
         this.distance[head] = 10 * getDistance( rssi, txPower );
-        Log.i(TAG, "==> updateBeacon: " + id + " RSSI: " + rssi +" Distance: " + String.valueOf(this.distance[head]) +
-            " Head: " + String.valueOf(head) + " Count: " + String.valueOf(count) );
+        this.lastUpdateTimeStamp = System.currentTimeMillis()/1000;
+        Log.d(TAG, "==> updateBeacon: " + id + " RSSI: " + rssi +" Distance: " + String.valueOf(this.distance[head]) +
+            " Head: " + String.valueOf(head) + " Count: " + String.valueOf(count) +
+            " TS: " + String.valueOf(lastUpdateTimeStamp));
         head++;
-        if(head == MAX_COUNT) {
+        if(head == MAX_COUNT_AVG) {
             head = 0; //re-point to first cell
         }
     }
@@ -58,7 +73,7 @@ public class Beacon {
         }
 
         totDistance = totDistance / count;
-        Log.i(TAG, "==> ID: " + id + " getAvgDistance: " + String.valueOf(totDistance));
+        Log.d(TAG, "==> ID: " + name + " getAvgDistance: " + String.valueOf(totDistance));
         return totDistance;
     }
 

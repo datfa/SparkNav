@@ -87,7 +87,7 @@ public class NotificationResultActivity extends AppCompatActivity {
 
             public void onPageFinished(WebView view, String url) {
                 Log.i(TAG, "onPageFinished: " + url);
-                //beaconScanner.startScanner();
+                beaconScanner.startScanner();
             }
         });
 

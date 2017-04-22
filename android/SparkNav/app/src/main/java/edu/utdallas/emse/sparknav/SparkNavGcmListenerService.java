@@ -97,7 +97,7 @@ public class SparkNavGcmListenerService extends GcmListenerService {
         //Define sound URI
         //Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-        builder.setSound(soundUri); //This sets the sound to play
+        //builder.setSound(soundUri); //This sets the sound to play
 
         // Build the finished notification and then display it to the user
         Notification notification = builder.build();
@@ -106,8 +106,9 @@ public class SparkNavGcmListenerService extends GcmListenerService {
         //notification.defaults = Notification.DEFAULT_SOUND;
 
         // use following way for custom sound
-        //final String packageName = context.getPackageName();
-        //notification.sound = Uri.parse("android.resource://" + packageName + "/" + soundResId);
+        final String packageName = getApplicationContext().getPackageName();
+        notification.sound = Uri.parse("android.resource://" + packageName + "/" + R.raw.aleart);
+        //notification.sound = Uri.parse("android.resource://my.package.name/raw/notification");
 
         NotificationManager mgr = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
         mgr.notify(NOTIFY_ID, notification);

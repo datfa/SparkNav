@@ -91,7 +91,7 @@
 				<input type="text" name="field3" class="field-style field-full align-none" placeholder="Location" />
 			</li>
 			<li>
-				<textarea name="field5" class="field-style" placeholder="Message">This is a notification from UTD emergency alert system. There is an fire in ECSS building. Use the nearest safe stairs and proceed to the nearest exit.</textarea>
+				<textarea name="field5" class="field-style" placeholder="Message">This is a notification from UTD emergency aleart system. There is an fire in ECSS building. Use the nearest safe stairs and proceed to the nearest exit.</textarea>
 			</li>
 			<li>
 				<input type="submit" value="Send Message" />

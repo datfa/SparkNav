@@ -178,6 +178,8 @@
 		var lineColor = mapPathColor[ mapPath % mapPathColor.length ];
 		var autoSelect = false;
 
+		var REST_URL = "http://" + window.location.hostname + ":8080";
+
 		var tx = 0;
 		var ty = 0;
 
@@ -264,7 +266,8 @@
 
 						var btn = document.getElementById("savedata");
 						btn.onclick = function() {
-						     var url = "http://localhost:8080/saveroom?loc=" + $('#location :selected').text() + "&data=" + $('#data').val() + "&callback=?";
+						     //var url = "http://localhost:8080/saveroom?loc=" + $('#location :selected').text() + "&data=" + $('#data').val() + "&callback=?";
+						     var url = REST_URL + "/saveroom?loc=" + $('#location :selected').text() + "&data=" + $('#data').val() + "&callback=?";
 							$.getJSON(url, function(result) {
 								alert(result);
 								//var p = $.parseJSON(result);
@@ -301,7 +304,9 @@
 			reset();
 
 			//next line "?callback=?" is used for jsonp
-			$.getJSON("http://localhost:8080/map?callback=?", function(result) {
+			//var url = "http://localhost:8080/map?callback=?";
+			var url = REST_URL + "/map?callback=?";3
+			$.getJSON(url, function(result) {
 			   //alert(JSON.parse(result));
 			   var resp = JSON.parse(result);
 			   for (var i = 0; i < resp.length; i++) {

@@ -203,7 +203,7 @@ app.get('/getexits', function(req, res){
 	var query = "SELECT * FROM exits" ;
 	connection.query(query, function (error, results, fields) {
 		if (error) throw error;
-		console.log(JSON.stringify(results));
+		console.log("getexits ==========> ", JSON.stringify(results));
 		res.setHeader('Content-Type', 'application/json');
 		res.jsonp(JSON.stringify(results));
 	});	
@@ -309,7 +309,7 @@ app.get('/getbeacons', function(req, res){
 	var query = "SELECT ID, name FROM beacon" ;
 	connection.query(query, function (error, results, fields) {
 		if (error) throw error;
-		console.log(JSON.stringify(results));
+		console.log("getbeacons ===> ", JSON.stringify(results));
 		res.setHeader('Content-Type', 'application/json');
 		res.jsonp(JSON.stringify(results));
 	});	
@@ -321,7 +321,7 @@ app.get('/getbeaconlocations', function(req, res){
 	var query = "SELECT b.uid uid, bl.loc_id loc_id FROM beacon_location bl, beacon b WHERE b.ID = bl.beacon_id" ;
 	connection.query(query, function (error, results, fields) {
 		if (error) throw error;
-		console.log(JSON.stringify(results));
+		console.log("getbeaconlocations ==> ", JSON.stringify(results));
 		res.setHeader('Content-Type', 'application/json');
 		res.jsonp(JSON.stringify(results));
 	});	

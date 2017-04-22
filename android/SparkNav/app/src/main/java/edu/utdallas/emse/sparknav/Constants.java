@@ -24,8 +24,8 @@ public class Constants {
     public static final String REST_URL = "http://" + MAP_DOMAIN + ":8080/";
 
     //public static final String MAP_URL_EMERGENCY = MAP_URL_ROOT + "viewmap.php";
-    //public static final String MAP_URL_NORMAL = MAP_URL_ROOT + "viewmap.php";
-    public static final String MAP_URL_NORMAL = MAP_URL_ROOT + "viewmapdummy.php";
+    public static final String MAP_URL_NORMAL = MAP_URL_ROOT + "viewmap.php";
+    //public static final String MAP_URL_NORMAL = MAP_URL_ROOT + "viewmapdummy.php";
     public static final String ROOMS_URL = REST_URL + "getrooms";
 
 }

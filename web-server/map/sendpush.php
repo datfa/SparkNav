@@ -42,6 +42,6 @@ $result = curl_exec($ch);
 curl_close($ch);
 
 //echo $result;
-echo "Message sent!!";
+echo "<center><h1>Message sent!!</h1></center>";
 
 ?>
