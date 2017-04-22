@@ -231,9 +231,8 @@
 
 
 		function drawUsingLocation (loc_id) {
-			var location = "drawUsingLocation: " + loc_id;
+			var location = "draw: " + loc_id;
 			console.log(location);
-			//var loc_id;
 
 			var p = map[0];
 			for(var i in p) {
@@ -260,7 +259,7 @@
 						ec2 = paper.rect(x - width_height_half, y + width_height_half, width_height, rect_height);
 			 			ec2.attr("stroke", "#000");
 			 			ec2.attr("fill", "#F00");
-						pt2 = paper.text(x, y + width_height_half + (rect_height / 2), "You have arrived!!");
+						pt2 = paper.text(x, y + width_height_half + (rect_height / 2), "You have arrived!");
 						pt2.attr( "fill", "#FFFF00" );
 						pt2.attr({ "font-size": 40, "font-family": "Arial, Helvetica, sans-serif", "font-weight": "bold" });
 					}
